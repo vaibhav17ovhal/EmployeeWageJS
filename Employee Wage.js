@@ -358,10 +358,110 @@ console.log(result6);
         return totalwage + dailywage
     }
 
-    console.log("\n======= Total emp wage using map =======");
-    console.log("Emp wagemap total wages: " + Array.from(Emp_Wage_Map.values()).reduce(totalWages , 0));
+    console.log("\n======= Total emp wage using map =======\n");
+    console.log("Emp wage map total wages: " + Array.from(Emp_Wage_Map.values()).reduce(totalWages , 0) + "\n");
 
 }
 
+//UC9
+{
+    const Part_Time = 1;
+    const Full_Time = 2;
+    const Part_Time_Hrs = 4;
+    const Full_Time_Hrs = 8;
+    const Wage_Per_Hr = 20;
+    const Max_Working_Days = 20;
+    const Max_Hours = 160;
+    
+    let total_emp_Hrs = 0;
+    let total_working_Days = 0;
+
+    let Emp_Wage_Array = new Array(); 
+    let Emp_Wage_Map = new Map();
+    let Emp_Hrs_Map = new Map();
+
+    function getWorkingHours(empCheck)
+    {
+    switch(empCheck) 
+        {
+        case Part_Time:
+            return Part_Time_Hrs;
+            
+        case Full_Time:
+            return Full_Time_Hrs;
+            
+        default:
+            return 0;
+            
+        }
+    }
+    
+    function calculateWages(empHrs)
+    {
+        return empHrs * Wage_Per_Hr
+    }
+
+    while(total_emp_Hrs <= Max_Hours && total_working_Days < Max_Working_Days)
+    {
+        total_working_Days++;
+        let empCheck = Math.floor(Math.random() * 10) % 3;
+        let empHrs = getWorkingHours(empCheck);
+        total_emp_Hrs += empHrs; 
+        Emp_Wage_Array.push(calculateWages(empHrs));
+        Emp_Hrs_Map.set(total_working_Days , empHrs);
+        Emp_Wage_Map.set(total_working_Days, calculateWages(empHrs));
+    }
+    
+    let empWage = calculateWages(total_emp_Hrs);
+
+    //console.log("======= Emp Daily Wage Array =======");
+    //console.log(Emp_Wage_Array);
+
+    //console.log("\n======= Emp Wage Map =======");
+    //console.log(Emp_Wage_Map);
+
+    //console.log("\n======= Emp Hour Map =======");
+    //console.log(Emp_Hrs_Map);
+
+    //console.log("Total Hours: " + total_emp_Hrs + ", Emp Wage: " + empWage + ", Total Days: " + total_working_Days);
+    //console.log(Emp_Wage_Array);
+
+    function totalWages(totalwage , dailywage)
+    {
+        return totalwage + dailywage
+    }
+    //console.log("\n======= Total emp wage using map =======");
+    //console.log("Emp wagemap total wages: " + Array.from(Emp_Wage_Map.values()).reduce(totalWages , 0));
+    
+//(A)
+    const findTotal = (totalVal , dailyVal) => totalVal + dailyVal;
+
+    let count = 0;
+    let totalHours = Array.from(Emp_Hrs_Map.values()).reduce(findTotal , 0);
+    let totalSalary = Emp_Wage_Array.filter(dailyWage => dailyWage > 0).reduce(findTotal , 0);
+    console.log("\n======= Emp Total Wage and Total Hrs calculation using Arrow Function =======\n");
+    console.log("Total Hours: " + totalHours + ",   Total Wage: " + totalSalary + "\n");
+
+//(B)
+    let nonWorkingDays = new Array();
+    let fullWorkingDays = new Array();
+    let halfWorkingDays = new Array();
+
+    Emp_Hrs_Map.forEach((values, key) => {
+        if(values == 8) fullWorkingDays.push(key);
+        else if(values == 4) halfWorkingDays.push(key);
+        else nonWorkingDays.push(key);
+    });
+
+    console.log("\n======= Full Working Days Array =======\n");
+    console.log(fullWorkingDays);
+
+    console.log("\n======= Half Working Days Array =======\n");
+    console.log(halfWorkingDays);
+
+    console.log("\n======= No Working Days Array =======\n");
+    console.log(nonWorkingDays);
+
+}
 
 
