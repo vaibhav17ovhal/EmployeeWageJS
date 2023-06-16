@@ -464,4 +464,40 @@ console.log(result6);
 
 }
 
+//UC10
+
+{
+    const Part_Time = 1;
+    const Full_Time = 2;
+    const Part_Time_Hrs = 4;
+    const Full_Time_Hrs = 8;
+    const Wage_Per_Hr = 20;
+    const Max_Working_Days = 20;
+    const Max_Hours = 160;
+
+    let total_emp_Hrs = 0;
+    let total_working_Days = 0;
+
+    let EmpDailyHrsAndWageArray = new Array();
+
+    while(total_emp_Hrs <= Max_Hours && total_working_Days < Max_Working_Days)
+    {
+        total_working_Days++;
+        let empCheck = Math.floor(Math.random() * 10) % 3;
+        let empHrs = getWorkingHours(empCheck);
+        total_emp_Hrs += empHrs; 
+
+        EmpDailyHrsAndWageArray.push(
+            {
+                dayNum: total_working_Days,
+                dailyHours: empHrs,
+                dailyWages: calculateWages(empHrs),
+                toString(){
+                    return '\nDay ' + this.dayNum + ' => Working Hours is: ' + this.dailyHours + ',  And Wage Earned:  ' + this.dailyWages  
+                }, 
+            });    
+    }
+    console.log("Showing Daily Hours Worked and Wage Earned: " + EmpDailyHrsAndWageArray);
+}
+
 
